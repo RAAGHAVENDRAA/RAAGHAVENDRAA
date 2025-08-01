@@ -3,17 +3,26 @@ FROM node:18
 # Install Mosquitto
 RUN apt-get update && apt-get install -y mosquitto
 
-# Create app directory
+# Set working directory
 WORKDIR /app
+
+# Copy dependencies
+COPY package.json .
+
+# Install Node dependencies (e.g., ws)
+RUN npm install
+
+# Copy app code
+COPY server.js .
 
 # Copy Mosquitto config
 COPY etc/mosquitto /etc/mosquitto
 
-# Copy Node.js app
-COPY server.js .
+# Create Mosquitto log folder
+RUN mkdir -p /mosquitto/log && chmod -R 777 /mosquitto/log
 
-# Open HTTP/WebSocket port
+# Expose HTTP/WebSocket port
 EXPOSE 3000
 
-# Run both Mosquitto and Node.js
-CMD mosquitto -c /etc/mosquitto/mosquitto.conf & node server.js
+# Run Mosquitto and Node proxy
+CMD mosquitto -c /etc/mosquitto/mosquitto.conf & npm start
