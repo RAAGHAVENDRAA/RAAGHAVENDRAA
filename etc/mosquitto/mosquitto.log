@@ -1,0 +1,10 @@
+1754016522: mosquitto version 2.0.22 starting
+1754016522: Config loaded from E:\2025\django\ccms\MQTT\etc\mosquitto\mosquitto.conf.
+1754016522: Error: Unable to open acl_file "E:/2025/django/ccms/mqtt-broker/etc/mosquitto/acl".
+1754016522: Error opening acl file "E:/2025/django/ccms/mqtt-broker/etc/mosquitto/acl".
+1754016546: mosquitto version 2.0.22 starting
+1754016546: Config loaded from E:\2025\django\ccms\MQTT\etc\mosquitto\mosquitto.conf.
+1754016546: Opening ipv6 listen socket on port 1883.
+1754016546: Opening ipv4 listen socket on port 1883.
+1754016546: mosquitto version 2.0.22 running
+1754016555: mosquitto version 2.0.22 terminating
