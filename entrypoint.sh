@@ -1,14 +1,10 @@
 #!/bin/sh
 
-# Create config directory if needed
-mkdir -p /etc/mosquitto
-
-
-# Generate mosquitto config
+# Generate Mosquitto config from template
 envsubst < /app/etc/mosquitto/mosquitto.template.conf > /etc/mosquitto/mosquitto.conf
 
-# Start Mosquitto
+# Start Mosquitto in background
 /usr/sbin/mosquitto -c /etc/mosquitto/mosquitto.conf &
 
-# Start Node.js proxy
+# Start the WebSocket proxy
 node /app/server.js
