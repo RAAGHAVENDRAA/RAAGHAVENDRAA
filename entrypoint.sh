@@ -3,11 +3,12 @@
 # Create config directory if needed
 mkdir -p /etc/mosquitto
 
-# Replace ${PORT} in the template and copy to Mosquitto
+
+# Generate mosquitto config
 envsubst < /app/etc/mosquitto/mosquitto.template.conf > /etc/mosquitto/mosquitto.conf
 
-# Start Mosquitto in the background
+# Start Mosquitto
 /usr/sbin/mosquitto -c /etc/mosquitto/mosquitto.conf &
 
-# Start Node.js server
+# Start Node.js proxy
 node /app/server.js

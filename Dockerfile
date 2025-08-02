@@ -7,18 +7,14 @@ RUN apt update && \
 
 WORKDIR /app
 
-# Copy all project files
+# Copy everything into container
 COPY . .
 
-# Install Node dependencies
-RUN ls -la && cat package.json && npm install
+# Install only if package.json exists
+RUN test -f package.json && npm install
 
-
-# Set entrypoint permissions
 RUN chmod +x /entrypoint.sh
 
-# Expose dynamic port
 EXPOSE 10000
 
-# Run the entrypoint
-CMD ["/entrypoint.sh"]
+CMD ["./entrypoint.sh"]
