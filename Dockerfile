@@ -11,7 +11,8 @@ WORKDIR /app
 COPY . .
 
 # Install Node dependencies
-RUN npm install
+RUN ls -la && cat package.json && npm install
+
 
 # Set entrypoint permissions
 RUN chmod +x /entrypoint.sh

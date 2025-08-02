@@ -1,5 +1,5 @@
 {
-  "name": "mqtt-websocket-proxy",
+  "name": "mqtt-proxy",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
