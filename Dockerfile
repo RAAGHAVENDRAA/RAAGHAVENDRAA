@@ -16,6 +16,6 @@ RUN chmod +x entrypoint.sh
 # Install Node dependencies
 RUN npm install
 
-EXPOSE 10000
+EXPOSE 10000 9001
 
 CMD ["./entrypoint.sh"]
