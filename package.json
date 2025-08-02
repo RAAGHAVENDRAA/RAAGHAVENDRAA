@@ -1,7 +1,6 @@
 {
-  "name": "mqtt-proxy",
+  "name": "mqtt-websocket-proxy",
   "version": "1.0.0",
-  "description": "Node.js WebSocket proxy for Mosquitto",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"

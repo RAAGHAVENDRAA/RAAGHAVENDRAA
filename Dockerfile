@@ -1,28 +1,23 @@
-FROM node:18
+FROM debian:bullseye
 
-# Install Mosquitto
-RUN apt-get update && apt-get install -y mosquitto
+# Install Mosquitto and Node.js
+RUN apt update && \
+    apt install -y mosquitto nodejs npm curl && \
+    npm install -g npm
 
-# Set working directory
 WORKDIR /app
 
-# Copy dependencies
-COPY package.json .
+# Copy all project files
+COPY . .
 
-# Install Node dependencies (e.g., ws)
+# Install Node dependencies
 RUN npm install
 
-# Copy app code
-COPY server.js .
+# Set entrypoint permissions
+RUN chmod +x /entrypoint.sh
 
-# Copy Mosquitto config
-COPY etc/mosquitto /etc/mosquitto
+# Expose dynamic port
+EXPOSE 10000
 
-# Create Mosquitto log folder
-RUN mkdir -p /mosquitto/log && chmod -R 777 /mosquitto/log
-
-# Expose HTTP/WebSocket port
-EXPOSE 3000
-
-# Run Mosquitto and Node proxy
-CMD mosquitto -c /etc/mosquitto/mosquitto.conf & npm start
+# Run the entrypoint
+CMD ["/entrypoint.sh"]
