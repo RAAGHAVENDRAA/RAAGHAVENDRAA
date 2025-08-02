@@ -11,7 +11,10 @@ WORKDIR /app
 COPY . .
 
 # Install only if package.json exists
-RUN test -f package.json && npm install
+RUN ls -la
+RUN cat package.json
+RUN npm install
+
 
 RUN chmod +x /entrypoint.sh
 
