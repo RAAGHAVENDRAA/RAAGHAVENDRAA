@@ -2,22 +2,22 @@ FROM debian:bullseye
 
 # Install Mosquitto and Node.js
 RUN apt update && \
-    apt install -y mosquitto nodejs npm curl && \
-    npm install -g npm
+    apt install -y mosquitto nodejs npm
 
+# Set working directory
 WORKDIR /app
 
-# Copy everything into container
+# Copy all files to container
 COPY . .
 
-# Install only if package.json exists
-RUN ls -la
-RUN cat package.json
+# Install Node.js dependencies
 RUN npm install
 
-
+# Give execute permission to entrypoint
 RUN chmod +x /entrypoint.sh
 
+# Expose WebSocket proxy port
 EXPOSE 10000
 
-CMD ["./entrypoint.sh"]
+# Start Mosquitto and Node app
+CMD ["/entrypoint.sh"]
