@@ -1,21 +1,19 @@
-FROM debian:bullseye
+FROM eclipse-mosquitto:2.0
 
-# Install Mosquitto and Node.js
-RUN apt update && \
-    apt install -y mosquitto nodejs npm
+# Install envsubst
+RUN apt-get update && apt-get install -y gettext
 
-# Set working directory inside container
+# Copy configuration and app files
+COPY etc/mosquitto/ /etc/mosquitto/
+COPY server.js /app/server.js
+COPY entrypoint.sh /entrypoint.sh
+COPY package.json /app/package.json
+
 WORKDIR /app
 
-# Copy everything from your local project folder to /app
-COPY . .
-
-# Make sure the entrypoint is executable
-RUN chmod +x entrypoint.sh
-
-# Install Node dependencies
 RUN npm install
+RUN chmod +x /entrypoint.sh
 
-EXPOSE 10000 9001
+EXPOSE 9001 10000
 
-CMD ["./entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
