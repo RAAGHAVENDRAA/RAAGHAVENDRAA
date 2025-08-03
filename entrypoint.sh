@@ -14,7 +14,7 @@
 
 # Start Mosquitto with correct WebSocket config
 /usr/sbin/mosquitto -c /etc/mosquitto/mosquitto.conf &
-mosquitto -c /etc/mosquitto/mosquitto.conf
+#mosquitto -c /etc/mosquitto/mosquitto.conf
 # Wait a bit to ensure Mosquitto is ready
 sleep 2
 
