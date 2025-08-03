@@ -13,6 +13,8 @@ COPY entrypoint.sh /entrypoint.sh
 
 WORKDIR /app
 
+COPY . .
+
 # Install Node.js dependencies
 RUN npm install
 
