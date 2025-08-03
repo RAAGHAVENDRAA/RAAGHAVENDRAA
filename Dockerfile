@@ -15,6 +15,8 @@ RUN apk add --no-cache gettext nodejs npm
 
 # Copy Mosquitto config
 COPY etc/mosquitto /etc/mosquitto
+COPY etc/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf
+
 
 # Copy Node app from previous stage
 COPY --from=nodebuilder /app /app
