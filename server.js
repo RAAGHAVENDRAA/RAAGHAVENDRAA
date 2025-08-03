@@ -5,6 +5,17 @@ const PORT = process.env.PORT || 10000;
 
 // Create HTTP server
 const server = http.createServer((req, res) => {
+  // ✅ Add CORS headers
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  if (req.method === "OPTIONS") {
+    res.writeHead(204);
+    res.end();
+    return;
+  }
+
   res.writeHead(200);
   res.end("✅ MQTT WebSocket Proxy is running");
 });
@@ -15,18 +26,16 @@ const wss = new WebSocket.Server({ server, path: "/mqtt" });
 wss.on("connection", (clientSocket) => {
   console.log("🌐 Client connected");
 
-  // Connect to Mosquitto WebSocket backend (assuming localhost inside container)
+  // Connect to Mosquitto WebSocket backend
   const backendSocket = new WebSocket("ws://localhost:9001");
 
   backendSocket.on("open", () => {
     console.log("🔌 Connected to Mosquitto");
 
-    // Forward client messages to backend
     clientSocket.on("message", (msg) => {
       backendSocket.send(msg);
     });
 
-    // Forward backend messages to client
     backendSocket.on("message", (msg) => {
       clientSocket.send(msg);
     });
