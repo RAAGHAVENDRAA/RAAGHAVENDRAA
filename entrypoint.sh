@@ -12,9 +12,12 @@
 
 #!/bin/sh
 
-envsubst < /app/etc/mosquitto/mosquitto.conf > /etc/mosquitto/mosquitto.conf
+# Start Mosquitto with correct WebSocket config
 /usr/sbin/mosquitto -c /etc/mosquitto/mosquitto.conf &
 
-sleep 2  # Give Mosquitto time to start
+# Wait a bit to ensure Mosquitto is ready
+sleep 2
 
+# Start Node.js proxy server
 node /app/server.js
+
