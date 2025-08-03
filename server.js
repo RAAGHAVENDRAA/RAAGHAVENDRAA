@@ -5,7 +5,7 @@ const PORT = process.env.PORT || 10000;
 
 const server = http.createServer((req, res) => {
   res.writeHead(200);
-  res.end("MQTT WebSocket Proxy is running my");
+  res.end("MQTT WebSocket Proxy is running my port");
 });
 
 const wss = new WebSocket.Server({ server, path: "/mqtt" });
