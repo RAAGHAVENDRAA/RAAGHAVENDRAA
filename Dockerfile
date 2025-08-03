@@ -1,28 +1,30 @@
+# ------------ Stage 1: Build Node.js App ------------
+FROM node:18-alpine AS nodebuilder
+
+WORKDIR /app
+COPY package.json ./
+COPY server.js ./
+RUN npm install
+
+
+# ------------ Stage 2: Mosquitto + Node Runtime ------------
 FROM eclipse-mosquitto:2.0
 
-# ✅ Use Alpine's package manager to install envsubst
-RUN apk add --no-cache gettext
+# Install WebSocket proxy requirements
+RUN apk add --no-cache gettext nodejs npm
 
 # Copy Mosquitto config
-COPY etc/mosquitto/ /etc/mosquitto/
+COPY etc/mosquitto /etc/mosquitto
 
-# Copy Node.js server
-COPY server.js /app/server.js
-COPY package.json /app/package.json
+# Copy Node app from previous stage
+COPY --from=nodebuilder /app /app
+
+# Copy and set entrypoint
 COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 WORKDIR /app
 
-COPY . .
+EXPOSE 1883 9001 10000
 
-# Install Node.js dependencies
-RUN npm install
-
-# Ensure the startup script is executable
-RUN chmod +x /entrypoint.sh
-
-# Expose ports: 9001 (WebSocket), 10000 (HTTP status)
-EXPOSE 9001 10000
-
-# Start both Mosquitto and Node proxy
 ENTRYPOINT ["/entrypoint.sh"]
