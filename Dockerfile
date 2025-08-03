@@ -1,7 +1,7 @@
 FROM eclipse-mosquitto:2.0
 
 # Install envsubst
-RUN apt-get update && apt-get install -y gettext
+RUN apt update && apt install -y gettext
 
 # Copy configuration and app files
 COPY etc/mosquitto/ /etc/mosquitto/
