@@ -25,6 +25,6 @@ RUN chmod +x /entrypoint.sh
 
 WORKDIR /app
 
-EXPOSE 1883 9001 10000
+EXPOSE 9001
 
 ENTRYPOINT ["/entrypoint.sh"]
